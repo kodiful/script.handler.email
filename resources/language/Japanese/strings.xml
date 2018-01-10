@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--
+      strings 30000 thru 30999 reserved for plugins and plugin settings
+      strings 31000 thru 31999 reserved for skins
+      strings 32000 thru 32999 reserved for scripts
+      strings 33000 thru 33999 reserved for common strings used in add-ons
+  -->
+  <string id="30000">メール設定</string>
+  <string id="30001">アカウント</string>
+  <string id="30002">パスワード</string>
+  <string id="30003">チェック間隔(分)</string>
+  <string id="30004">メールサービス</string>
+  <string id="30005">[COLOR green]再読み込み[/COLOR]</string>
+  <string id="30100">その他</string>
+  <string id="30101">メッセージ転送</string>
+  <string id="30102">着信時画面切替</string>
+  <string id="30103">着信時トーン</string>
+  <string id="30104">デバッグ</string>
+  <string id="30106">インスタント返信</string>
+  <string id="30108">転送先メールアドレス</string>
+  <string id="30201">新着メールを確認</string>
+  <string id="30202">アドオン設定</string>
+  <string id="30901">(無題)</string>
+  <string id="30902">%Y-%m-%d %H:%M:%S</string>
+  <string id="30903">(無し)</string>
+  <string id="30904">アドオン設定</string>
+  <string id="30905">[COLOR green]メッセージを選んで返信[/COLOR]</string>
+  <string id="30906">わかりました|電話をください</string>
+  <string id="30907">メッセージを表示しました</string>
+  <string id="30908">[自動返信]</string>
+  <string id="30909">[要返信]</string>
+</strings>
+

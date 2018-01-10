@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+  <!--
+      strings 30000 thru 30999 reserved for plugins and plugin settings
+      strings 31000 thru 31999 reserved for skins
+      strings 32000 thru 32999 reserved for scripts
+      strings 33000 thru 33999 reserved for common strings used in add-ons
+  -->
+  <string id="30000">Mail Settings</string>
+  <string id="30001">Account</string>
+  <string id="30002">Password</string>
+  <string id="30003">Interval(min)</string>
+  <string id="30004">Mail Service</string>
+  <string id="30005">[COLOR green]Reload[/COLOR]</string>
+  <string id="30006">Keep Messages(days)</string>
+  <string id="30100">Others</string>
+  <string id="30101">Message Forwarding</string>
+  <string id="30102">Activation on Arrival</string>
+  <string id="30103">Tone on Arrival</string>
+  <string id="30104">Debug</string>
+  <string id="30106">Instant Reply</string>
+  <string id="30108">Forwarding Addresses</string>
+  <string id="30201">Check new mail</string>
+  <string id="30202">Addon settings</string>
+  <string id="30901">(Untitled)</string>
+  <string id="30902">%d %b %Y %H:%M:%S</string>
+  <string id="30903">(Not found)</string>
+  <string id="30904">Addon settings</string>
+  <string id="30905">[COLOR green]Select messege &amp; Reply[/COLOR]</string>
+  <string id="30906">OK|Call me</string>
+  <string id="30907">Message has been displayed</string>
+  <string id="30908">[Auto Reply]</string>
+  <string id="30909">[needs reply]</string>
+</strings>

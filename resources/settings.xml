@@ -1,0 +1,22 @@
+<settings>
+  <!--
+      strings 30000 thru 30999 reserved for plugins and plugin settings
+      strings 31000 thru 31999 reserved for skins
+      strings 32000 thru 32999 reserved for scripts
+      strings 33000 thru 33999 reserved for common strings used in add-ons
+  -->
+  <category label="30000">
+    <setting label="30004" id="service" type="labelenum" values="Gmail|iCloud" default="Gmail"/>
+    <setting label="30001" id="address" type="text" default=""/>
+    <setting label="30002" id="password" type="text" option="hidden" default=""/>
+    <setting label="30005" type="action" option="close" action="Container.Update(plugin://plugin.script.message.tv/?action=refresh,replace)"/>
+  </category>
+  <category label="30100">
+    <setting label="30101" id="cc" type="bool" default="false"/>
+    <setting label="30108" id="cc_addresses" type="text" default="" enable="eq(-1,true)"/>/>
+    <setting label="30102" id="cec" type="bool" default="true"/>
+    <setting label="30103" id="tone" type="bool" default="true"/>
+    <setting label="30106" id="instantreply" type="bool" default="true"/>
+    <setting label="30104" id="debug" type="bool" default="false"/>
+  </category>
+</settings>
