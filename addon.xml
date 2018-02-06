@@ -15,8 +15,8 @@
     <platform>all</platform>
     <summary lang="en">Mail Viewer</summary>
     <summary lang="ja">メールビューア</summary>
-    <description lang="en">View mails on TV</description>
-    <description lang="ja">TVでメールをやりとりします</description>
+    <description lang="en">Handle Gmail/iCloud mail</description>
+    <description lang="ja">Gmail/iCloudメールを扱います</description>
     <disclaimer lang="en">Works on Windows &amp; MacOSX</disclaimer>
     <disclaimer lang="ja">WindowsとMacOSXで動作</disclaimer>
   </extension>

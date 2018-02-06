@@ -13,12 +13,8 @@
   <string id="30004">メールサービス</string>
   <string id="30005">[COLOR green]再読み込み[/COLOR]</string>
   <string id="30100">その他</string>
-  <string id="30101">メッセージ転送</string>
   <string id="30102">着信時画面切替</string>
-  <string id="30103">着信時トーン</string>
   <string id="30104">デバッグ</string>
-  <string id="30106">インスタント返信</string>
-  <string id="30108">転送先メールアドレス</string>
   <string id="30201">新着メールを確認</string>
   <string id="30202">アドオン設定</string>
   <string id="30901">(無題)</string>
@@ -31,4 +27,3 @@
   <string id="30908">[自動返信]</string>
   <string id="30909">[要返信]</string>
 </strings>
-

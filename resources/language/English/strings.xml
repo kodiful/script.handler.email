@@ -12,14 +12,9 @@
   <string id="30003">Interval(min)</string>
   <string id="30004">Mail Service</string>
   <string id="30005">[COLOR green]Reload[/COLOR]</string>
-  <string id="30006">Keep Messages(days)</string>
   <string id="30100">Others</string>
-  <string id="30101">Message Forwarding</string>
   <string id="30102">Activation on Arrival</string>
-  <string id="30103">Tone on Arrival</string>
   <string id="30104">Debug</string>
-  <string id="30106">Instant Reply</string>
-  <string id="30108">Forwarding Addresses</string>
   <string id="30201">Check new mail</string>
   <string id="30202">Addon settings</string>
   <string id="30901">(Untitled)</string>

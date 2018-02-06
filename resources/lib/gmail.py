@@ -14,9 +14,8 @@ from email import Utils
 from imaplib import IMAP4,IMAP4_SSL
 from smtplib import SMTP,SMTP_SSL
 
-
 class Gmail:
-    
+
     def __init__(self, service, user, password):
         self.config = {
             'Gmail':{
@@ -93,7 +92,7 @@ class Gmail:
         conn.sendmail(from_address, to_addresses, msg.as_string())
         conn.close()
 
-    def recv(self, criterion='ALL', pref='TEXT'):
+    def receive(self, criterion='ALL', pref='TEXT'):
         emails = []
         if self.imap_ssl:
             conn = IMAP4_SSL(self.imap_host, self.imap_port)
@@ -146,7 +145,7 @@ class Gmail:
                 item[key] = self.convert_header(msg,key)
             for key in ['Date','Message-Id']:
                 item[key] = msg.get(key)
-            # append to array 
+            # append to array
             emails.append(item)
         conn.close()
         conn.logout()
@@ -167,7 +166,7 @@ class Gmail:
             return ' '.join(buf).strip()
         except:
             return ''
-        
+
     def convert_payload(self, msg):
         try:
             charset = msg.get_content_charset()
