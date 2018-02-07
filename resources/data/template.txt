@@ -1,7 +1,0 @@
-From: {sender}
-To: {recipient}
-Date: {date}
-Subject: {subject}
-Message-Id: <{messageid}>
-
-{message}

@@ -11,72 +11,100 @@ import os
 import codecs
 import urllib, urllib2, urlparse
 import re
-
 import email.utils
 import time, datetime
 
 from bs4 import BeautifulSoup
-from resources.lib.gmail import Gmail
 from resources.lib.common import log, notify
+
+from resources.lib.gmail import Gmail
+from resources.lib.icloud import iCloud
 
 class Main:
 
     def __init__(self):
+
         # アドオン
         self.addon = xbmcaddon.Addon()
+
+        # メールサービスを初期化
+        service = self.addon.getSetting('service')
+        if service == 'Gmail':
+            address = self.addon.getSetting('address1')
+            password = self.addon.getSetting('password1')
+            if address and password:
+                self.service = Gmail(address, password)
+            else:
+                self.addon.openSettings()
+                sys.exit()
+        elif service == 'iCloud':
+            address = self.addon.getSetting('address2')
+            password = self.addon.getSetting('password2')
+            if address and password:
+                self.service = iCloud(address, password)
+            else:
+                self.addon.openSettings()
+                sys.exit()
+        else:
+            notify('unknown service: %s' % service, error=True)
+            sys.exit()
+
+
         # ファイル/ディレクトリパス
         self.profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile').decode('utf-8'))
-        self.plugin_path = xbmc.translatePath(self.addon.getAddonInfo('path').decode('utf-8'))
-        self.resources_path = os.path.join(self.plugin_path, 'resources')
-        self.data_path = os.path.join(self.resources_path, 'data')
-        self.lib_path = os.path.join(self.resources_path, 'lib')
-        self.cache_path = os.path.join(self.profile_path, 'cache')
-        self.template_file = os.path.join(self.data_path, 'template.txt')
+        self.cache_path = os.path.join(self.profile_path, 'cache', service)
         if not os.path.isdir(self.cache_path):
             os.makedirs(self.cache_path)
 
         # パラメータ抽出
-        params = {'action':'','filename':'','subject':'','time':'','message':'','name':'','from':'', 'cc':''}
+        params = {'action':'','filename':'','subject':'','message':'', 'to':'', 'cc':'', 'bcc':''}
         args = urlparse.parse_qs(sys.argv[2][1:])
         for key in params.keys():
-            val = args.get(key, None)
-            if val: params[key] = val[0]
+            params[key] = args.get(key, None)
+        for key in ['action','filename','subject','message']:
+            params[key] = params[key] and params[key][0]
+
         # メイン処理
-        if self.addon.getSetting('address') == '' or self.addon.getSetting('password') == '':
-            # アカウント情報設定
-            self.addon.openSettings()
-        elif params['action'] == '':
-            # 新着メール取得
-            self.receive('UNSEEN')
+        if params['action'] is None:
+            # メール取得
+            # 前回取得の月日を読み込む
+            criterion_file = os.path.join(self.cache_path, '.criterion')
+            if os.path.isfile(criterion_file):
+                f = open(criterion_file, 'r')
+                criterion = f.read().decode('utf-8')
+                f.close()
+            else:
+                d = datetime.datetime.now() - datetime.timedelta(days=30)
+                criterion = d.strftime('SINCE %d-%b-%Y').decode('utf-8')
+            lastid, n = self.receive(criterion)
             self.list()
+            # 取得されたメール数を通知
+            notify('%d mails retrieved' % n)
+            # 次回取得のために月日を保存
+            #d = datetime.datetime.now()
+            #criterion = d.strftime('SINCE %d-%b-%Y')
+            if lastid:
+                criterion = '%d:%d' % (int(lastid)+1,int(lastid)+200)
+                f = open(criterion_file, 'w')
+                f.write(criterion)
+                f.close()
         elif params['action'] == 'refresh':
             # キャッシュクリア
             files = os.listdir(self.cache_path)
             for filename in files:
                 os.remove(os.path.join(self.cache_path, filename))
-            # メール取得
-            #mails = self.receive('SINCE 1-Jan-2015')
-            d = datetime.datetime.now() - datetime.timedelta(days=30)
-            criterion = d.strftime('SINCE %d-%b-%Y').decode('utf-8')
-            self.receive(criterion)
-            self.list()
+            # 再読み込み
+            xbmc.executebuiltin('Container.Update(%s,replace)' % (sys.argv[0]))
         elif params['action'] == 'open':
             # メールの内容を表示
             filename = urllib.unquote_plus(params['filename'])
             if filename: self.open(filename)
 
     def send(self, subject, message, to, cc=None, replyto=None):
-        # アカウント情報
-        service = self.addon.getSetting('service')
-        address = self.addon.getSetting('address')
-        password = self.addon.getSetting('password')
-        # クラス
-        gmail = Gmail(service, address, password)
         # メール送信
-        gmail.send(subject, message, [to], cc, replyto_address=replyto)
+        self.service.send(subject, message, [to], cc, replyto_address=replyto)
         # 通知
         notify('Message has been sent to %s' % to)
-        log('send message to %s' % to)
 
     def convert(self, item):
         # extract filename & timestamp
@@ -99,12 +127,8 @@ class Main:
         return filename, timestamp
 
     def receive(self, criterion):
-        # アカウント情報
-        service = self.addon.getSetting('service')
-        address = self.addon.getSetting('address')
-        password = self.addon.getSetting('password')
         # メール取得
-        mails = Gmail(service, address, password).receive(criterion, 'TEXT')
+        lastid, mails = self.service.receive(criterion, 'TEXT')
         # メール毎の処理
         for mail in mails:
             # データ変換
@@ -126,6 +150,7 @@ class Main:
             f.close()
             # タイムスタンプを変更
             os.utime(filepath, (timestamp, timestamp))
+        return lastid, len(mails)
 
     def list(self):
         #ファイルリスト
@@ -166,7 +191,7 @@ class Main:
                     # コンテクストメニュー
                     menu = []
                     # 新着確認
-                    menu.append((self.addon.getLocalizedString(30201),'XBMC.RunPlugin(plugin://%s/?action=)' % (self.addon.getAddonInfo('id'))))
+                    menu.append((self.addon.getLocalizedString(30201),'Container.Update(%s,replace)' % (sys.argv[0])))
                     # アドオン設定
                     menu.append((self.addon.getLocalizedString(30202),'Addon.OpenSettings(%s)' % (self.addon.getAddonInfo('id'))))
                     # 追加

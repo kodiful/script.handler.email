@@ -7,8 +7,10 @@
   -->
   <category label="30000">
     <setting label="30004" id="service" type="labelenum" values="Gmail|iCloud" default="Gmail"/>
-    <setting label="30001" id="address" type="text" default=""/>
-    <setting label="30002" id="password" type="text" option="hidden" default=""/>
+    <setting label="30001" id="address1" type="text" default="" visible="eq(-1,0)"/>
+    <setting label="30002" id="password1" type="text" option="hidden" default="" visible="eq(-2,0)"/>
+    <setting label="30001" id="address2" type="text" default="" visible="eq(-3,1)"/>
+    <setting label="30002" id="password2" type="text" option="hidden" default="" visible="eq(-4,1)"/>
     <setting label="30005" type="action" option="close" action="Container.Update(plugin://$ID/?action=refresh,replace)"/>
   </category>
   <category label="30100">
