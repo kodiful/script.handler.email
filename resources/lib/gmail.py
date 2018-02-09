@@ -13,9 +13,9 @@ https://support.google.com/accounts/answer/185839?hl=ja
 
 '''
 
-from mailhandler import MailHandler
+from mail import Mail
 
-class Gmail(MailHandler):
+class Gmail(Mail):
 
     def __init__(self, user, password):
         self.smtp_host = 'smtp.gmail.com'
@@ -28,4 +28,4 @@ class Gmail(MailHandler):
         self.imap_port = 993
         self.imap_ssl  = True
         self.imap_tls  = False
-        MailHandler.__init__(self, user, password)
+        Mail.__init__(self, user, password)

@@ -14,7 +14,7 @@ from email import Utils
 from imaplib import IMAP4,IMAP4_SSL
 from smtplib import SMTP,SMTP_SSL
 
-class MailHandler:
+class Mail:
 
     def __init__(self, user, password):
         self.user = user

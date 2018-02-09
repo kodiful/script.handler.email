@@ -10,9 +10,9 @@ https://support.apple.com/ja-jp/HT204397
 
 '''
 
-from mailhandler import MailHandler
+from mail import Mail
 
-class iCloud(MailHandler):
+class iCloud(Mail):
 
     def __init__(self, user, password):
         self.smtp_host = 'smtp.mail.me.com'
@@ -25,4 +25,4 @@ class iCloud(MailHandler):
         self.imap_port = 993
         self.imap_ssl  = True
         self.imap_tls  = False
-        MailHandler.__init__(self, user, password)
+        Mail.__init__(self, user, password)

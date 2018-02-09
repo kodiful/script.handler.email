@@ -24,10 +24,8 @@ from resources.lib.icloud import iCloud
 class Main:
 
     def __init__(self, service=None):
-
         # アドオン
         self.addon = xbmcaddon.Addon()
-
         # メールサービスを初期化
         service = service or self.addon.getSetting('service')
         if service == 'Gmail':
@@ -49,12 +47,17 @@ class Main:
         else:
             notify('unknown service: %s' % service, error=True)
             sys.exit()
-
-        # ファイル/ディレクトリパス
-        self.profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile').decode('utf-8'))
-        self.cache_path = os.path.join(self.profile_path, 'cache', service)
+        # キャッシュディレクトリのパス
+        profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile').decode('utf-8'))
+        self.cache_path = os.path.join(profile_path, 'cache', service)
         if not os.path.isdir(self.cache_path):
             os.makedirs(self.cache_path)
+        # 表示するメール数
+        self.listsize = self.addon.getSetting('listsize')
+        if self.listsize == 'Unlimited':
+            self.listsize = 0
+        else:
+            self.listsize = int(self.listsize)
 
     def main(self):
         # パラメータ抽出
@@ -201,7 +204,7 @@ class Main:
         for filename in files:
             filepath = os.path.join(self.cache_path,filename)
             if os.path.isfile(filepath) and not filename.startswith('.'):
-                if count < 200:
+                if self.listsize == 0 or count < self.listsize:
                     # ファイル読み込み
                     f = codecs.open(filepath,'r','utf-8')
                     lines = f.readlines();
