@@ -7,10 +7,9 @@ import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
-import base64
 import os
 import codecs
-import urllib, urllib2, urlparse
+import urllib, urlparse
 import re
 import email.utils
 import time, datetime
@@ -18,6 +17,8 @@ import time, datetime
 from bs4 import BeautifulSoup
 
 from resources.lib.common import log, notify
+
+from resources.lib.mail import Mail
 from resources.lib.gmail import Gmail
 from resources.lib.icloud import iCloud
 
@@ -27,37 +28,58 @@ class Main:
         # アドオン
         self.addon = xbmcaddon.Addon()
         # メールサービスを初期化
+        self.service = None
         service = service or self.addon.getSetting('service')
-        if service == 'Gmail':
-            address = self.addon.getSetting('address1')
+        if service == 'Custom':
+            user      = self.addon.getSetting('user')
+            password  = self.addon.getSetting('password')
+            smtp_host = self.addon.getSetting('smtp_host')
+            smtp_port = self.addon.getSetting('smtp_port')
+            smtp_auth = self.addon.getSetting('smtp_auth')
+            smtp_ssl  = self.addon.getSetting('smtp_ssl')
+            smtp_tls  = self.addon.getSetting('smtp_tls')
+            smtp_from = self.addon.getSetting('smtp_from')
+            imap_host = self.addon.getSetting('imap_host')
+            imap_port = self.addon.getSetting('imap_port')
+            imap_ssl  = self.addon.getSetting('imap_ssl')
+            imap_tls  = self.addon.getSetting('imap_tls')
+            if user and password and smtp_host and smtp_port and smtp_from and smtp_host and smtp_port:
+                config = {
+                    'smtp_host': smtp_host,
+                    'smtp_port': int(smtp_port),
+                    'smtp_auth': smtp_auth=='true',
+                    'smtp_ssl':  smtp_ssl=='true',
+                    'smtp_tls':  smtp_tls=='true',
+                    'smtp_from': smtp_from,
+                    'imap_host': imap_host,
+                    'imap_port': int(imap_port),
+                    'imap_ssl':  imap_ssl=='true',
+                    'imap_tls':  imap_tls=='true'
+                }
+                self.service = Mail(user, password, config)
+        elif service == 'Gmail':
+            user = self.addon.getSetting('user1')
             password = self.addon.getSetting('password1')
-            if address and password:
-                self.service = Gmail(address, password)
-            else:
-                self.addon.openSettings()
-                sys.exit()
+            if user and password:
+                self.service = Gmail(user, password)
         elif service == 'iCloud':
-            address = self.addon.getSetting('address2')
+            user = self.addon.getSetting('user2')
             password = self.addon.getSetting('password2')
-            if address and password:
-                self.service = iCloud(address, password)
+            if user and password:
+                self.service = iCloud(user, password)
+        # メールサービスが正常に初期化されたら他の初期化を実行
+        if self.service:
+            # キャッシュディレクトリのパス
+            profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile').decode('utf-8'))
+            self.cache_path = os.path.join(profile_path, 'cache', service)
+            if not os.path.isdir(self.cache_path):
+                os.makedirs(self.cache_path)
+            # 表示するメール数
+            self.listsize = self.addon.getSetting('listsize')
+            if self.listsize == 'Unlimited':
+                self.listsize = 0
             else:
-                self.addon.openSettings()
-                sys.exit()
-        else:
-            notify('unknown service: %s' % service, error=True)
-            sys.exit()
-        # キャッシュディレクトリのパス
-        profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile').decode('utf-8'))
-        self.cache_path = os.path.join(profile_path, 'cache', service)
-        if not os.path.isdir(self.cache_path):
-            os.makedirs(self.cache_path)
-        # 表示するメール数
-        self.listsize = self.addon.getSetting('listsize')
-        if self.listsize == 'Unlimited':
-            self.listsize = 0
-        else:
-            self.listsize = int(self.listsize)
+                self.listsize = int(self.listsize)
 
     def main(self):
         # パラメータ抽出
@@ -67,7 +89,6 @@ class Main:
             params[key] = args.get(key, None)
         for key in ['action','filename','subject','message']:
             params[key] = params[key] and params[key][0]
-
         # メイン処理
         if params['action'] is None:
             # メールをチェック
@@ -91,7 +112,7 @@ class Main:
                 bcc = None
             self.send(subject=params['subject'], message=params['message'], to=params['to'], cc=params['cc'], bcc=bcc)
 
-    def check(self, silent=False):
+    def check(self, refresh=True):
         # 管理用ファイル
         criterion_file = os.path.join(self.cache_path, '.criterion')
         newmails_file = os.path.join(self.cache_path, '.newmails')
@@ -118,7 +139,7 @@ class Main:
             # 新着があることを通知
             notify('New mail from %s' % senders[newmails[-1]])
         # アドオン操作で呼び出された場合の処理
-        if silent == False:
+        if refresh:
             if os.path.isfile(newmails_file):
                 # 新着メールのファイルパスリストを読み込む
                 f = open(newmails_file, 'r')
@@ -289,4 +310,9 @@ class Main:
         viewer.getControl(5).setText('%s\n\n%s' % ('\n'.join(header),'\n'.join(body)))
 
 
-if __name__  == '__main__': Main().main()
+if __name__  == '__main__':
+    main = Main()
+    if main.service:
+        main.main()
+    else:
+        xbmcaddon.Addon().openSettings()

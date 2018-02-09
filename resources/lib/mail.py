@@ -16,10 +16,22 @@ from smtplib import SMTP,SMTP_SSL
 
 class Mail:
 
-    def __init__(self, user, password):
+    def __init__(self, user, password, config=None):
         self.user = user
         self.password = password
-        self.smtp_from = self.smtp_from % user
+        if config:
+            self.smtp_host = config['smtp_host']
+            self.smtp_port = config['smtp_port']
+            self.smtp_auth = config['smtp_auth']
+            self.smtp_ssl  = config['smtp_ssl']
+            self.smtp_tls  = config['smtp_tls']
+            self.smtp_from = config['smtp_from']
+            self.imap_host = config['imap_host']
+            self.imap_port = config['imap_port']
+            self.imap_ssl  = config['imap_ssl']
+            self.imap_tls  = config['imap_tls']
+        if self.smtp_from.find('%s') > -1:
+            self.smtp_from = self.smtp_from % user
         self.email_default_encoding = 'utf-8'
 
     def send(self, subject, body, to, cc=None, bcc=None, replyto=None):

@@ -6,12 +6,27 @@
       strings 33000 thru 33999 reserved for common strings used in add-ons
   -->
   <category label="30000">
-    <setting label="30004" id="service" type="labelenum" values="Gmail|iCloud" default="Gmail"/>
-    <setting label="30001" id="address1" type="text" default="" visible="eq(-1,0)"/>
-    <setting label="30002" id="password1" type="text" option="hidden" default="" visible="eq(-2,0)"/>
-    <setting label="30001" id="address2" type="text" default="" visible="eq(-3,1)"/>
-    <setting label="30002" id="password2" type="text" option="hidden" default="" visible="eq(-4,1)"/>
-    <setting label="30005" type="action" option="close" action="Container.Update(plugin://$ID/?action=refresh,replace)"/>
+    <setting label="30020" id="service" type="labelenum" values="Gmail|iCloud|Custom" default="Gmail"/>
+    <!--Custom-->
+    <setting label="30001" id="user" type="text" default="" visible="eq(-1,2)"/>
+    <setting label="30002" id="password" type="text" option="hidden" default="" visible="eq(-2,2)"/>
+    <setting label="30003" id="smtp_host" type="text" default="smtp.gmail.com" visible="eq(-3,2)"/>
+    <setting label="30004" id="smtp_port" type="number" default="465" visible="eq(-4,2)"/>
+    <setting label="30005" id="smtp_auth" type="bool" default="true" visible="eq(-5,2)"/>
+    <setting label="30006" id="smtp_ssl" type="bool" default="true" visible="eq(-6,2)"/>
+    <setting label="30007" id="smtp_tls" type="bool" default="false" visible="eq(-7,2)"/>
+    <setting label="30008" id="smtp_from" type="text" default="%s@gmail.com" visible="eq(-8,2)"/>
+    <setting label="30009" id="imap_host" type="text" default="imap.gmail.com" visible="eq(-9,2)"/>
+    <setting label="30010" id="imap_port" type="number" default="993" visible="eq(-10,2)"/>
+    <setting label="30011" id="imap_ssl" type="bool" default="true" visible="eq(-11,2)"/>
+    <setting label="30012" id="imap_tls" type="bool" default="false" visible="eq(-12,2)"/>
+    <!--Gmail-->
+    <setting label="30001" id="user1" type="text" default="" visible="eq(-13,0)"/>
+    <setting label="30002" id="password1" type="text" option="hidden" default="" visible="eq(-14,0)"/>
+    <!--iCloud-->
+    <setting label="30001" id="user2" type="text" default="" visible="eq(-15,1)"/>
+    <setting label="30002" id="password2" type="text" option="hidden" default="" visible="eq(-16,1)"/>
+    <setting label="30021" type="action" option="close" action="Container.Update(plugin://$ID/?action=refresh,replace)"/>
   </category>
   <category label="30100">
     <setting label="30103" id="listsize" type="labelenum" values="20|50|100|200|300|500|Unlimited" default="100"/>

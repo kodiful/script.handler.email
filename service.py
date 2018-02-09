@@ -35,10 +35,13 @@ class Monitor(xbmc.Monitor):
 
 
 if __name__ == "__main__":
-
     monitor = Monitor()
     while not monitor.abortRequested():
         if monitor.waitForAbort(60):
             break
         if monitor.check_timer():
-            Main().check(silent=True)
+            main = Main()
+            if main.service:
+                main.check(refresh=False)
+            else:
+                xbmcaddon.Addon().openSettings()
