@@ -102,7 +102,7 @@ class Main:
             d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
             criterion = d.strftime('SINCE %d-%b-%Y').decode('utf-8')
         # 設定した期間のメールを検索
-        newmails = self.receive(criterion)
+        newmails, senders = self.receive(criterion)
         if len(newmails) > 0:
             # 新着メールのファイルパスリストを書き出す
             f = open(newmails_file, 'a')
@@ -113,7 +113,7 @@ class Main:
             if self.addon.getSetting('cec') == 'true':
                 xbmc.executebuiltin('XBMC.CECActivateSource')
             # 新着があることを通知
-            notify('New mail arrived')
+            notify('New mail from %s' % senders[newmails[-1]])
         # アドオン操作で呼び出された場合の処理
         if silent == False:
             if os.path.isfile(newmails_file):
@@ -165,6 +165,7 @@ class Main:
         mails = self.service.receive(criterion, 'TEXT')
         # 新規メールのリスト
         newmails = []
+        senders = {}
         # メール毎の処理
         for mail in mails:
             # データ変換
@@ -188,8 +189,9 @@ class Main:
                 os.utime(filepath, (timestamp, timestamp))
                 # 新規メールのパスを格納
                 newmails.append(filepath)
+                senders[filepath] = mail['From'].replace('\r\n','')
         log('%d/%d mails retrieved using criterion "%s"' % (len(newmails),len(mails),criterion))
-        return newmails
+        return newmails, senders
 
     def list(self, newmails):
         #ファイルリスト
