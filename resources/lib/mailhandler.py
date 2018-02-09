@@ -14,19 +14,15 @@ from email import Utils
 from imaplib import IMAP4,IMAP4_SSL
 from smtplib import SMTP,SMTP_SSL
 
-from common import log
-
 class MailHandler:
 
     def __init__(self, user, password):
         self.user = user
         self.password = password
+        self.smtp_from = self.smtp_from % user
         self.email_default_encoding = 'utf-8'
 
-    def get_from_address(self):
-        return self.smtp_from % self.user
-
-    def send(self, subject, body, to_addresses, cc_addresses=None, bcc_addresses=None, replyto_address=None):
+    def send(self, subject, body, to, cc=None, bcc=None, replyto=None):
         if self.smtp_ssl:
             conn = SMTP_SSL(self.smtp_host, self.smtp_port)
         else:
@@ -37,19 +33,18 @@ class MailHandler:
             conn.ehlo()
         if self.smtp_auth:
             conn.login(self.user, self.password)
-        from_address = self.smtp_from % self.user
         msg = MIMEText(body, 'plain', self.email_default_encoding)
         msg['Subject'] = Header(subject, self.email_default_encoding)
-        msg['From'] = from_address
-        msg['To'] = ', '.join(to_addresses)
-        if cc_addresses and len(cc_addresses) > 0:
-            msg['CC'] = ', '.join(cc_addresses)
-        if bcc_addresses and len(bcc_addresses) > 0:
-            msg['BCC'] = ', '.join(bcc_addresses)
-        if replyto_address:
-            msg['Reply-To'] = replyto_address;
+        msg['From'] = self.smtp_from
+        msg['To'] = ', '.join(to)
+        if cc and len(cc) > 0:
+            msg['CC'] = ', '.join(cc)
+        if bcc and len(bcc) > 0:
+            msg['BCC'] = ', '.join(bcc)
+        if replyto:
+            msg['Reply-To'] = replyto;
         msg['Date'] = Utils.formatdate(localtime=True)
-        conn.sendmail(from_address, to_addresses, msg.as_string())
+        conn.sendmail(self.smtp_from, to, msg.as_string())
         conn.close()
 
     def receive(self, criterion='ALL', pref='TEXT'):
@@ -65,7 +60,6 @@ class MailHandler:
         conn.login(self.user, self.password)
         conn.select('inbox')
         typ, msgs = conn.search(None, criterion)
-        lastid = None
         for id in msgs[0].split():
             typ, data = conn.fetch(id, '(RFC822)')
             msg = email.message_from_string(data[0][1])
@@ -106,14 +100,14 @@ class MailHandler:
                 item[key] = self.convert_header(msg,key)
             for key in ['Date','Message-Id']:
                 item[key] = msg.get(key)
+            # normalize Message-Id
+            item['Message-Id'] = re.sub(r'[^a-zA-Z0-9\-\.\@\_]', '', item['Message-Id'])
             # append to array
             emails.append(item)
-            # keep id as lastid
-            lastid = id
         conn.close()
         conn.logout()
         # sort array in reverse order of Date
-        return lastid, sorted(emails, key=lambda item: email.utils.mktime_tz(email.utils.parsedate_tz(item['Date'])), reverse=True)
+        return sorted(emails, key=lambda item: email.utils.mktime_tz(email.utils.parsedate_tz(item['Date'])), reverse=True)
 
     def convert_header(self, msg, key):
         try:

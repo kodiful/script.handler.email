@@ -9,10 +9,10 @@
   <string id="30000">Mail Settings</string>
   <string id="30001">Account</string>
   <string id="30002">Password</string>
-  <string id="30003">Interval(min)</string>
   <string id="30004">Mail Service</string>
   <string id="30005">[COLOR green]Reload[/COLOR]</string>
   <string id="30100">Others</string>
+  <string id="30101">Check Interval（min）</string>
   <string id="30102">Activation on Arrival</string>
   <string id="30104">Debug</string>
   <string id="30201">Check new mail</string>
@@ -20,10 +20,4 @@
   <string id="30901">(Untitled)</string>
   <string id="30902">%d %b %Y %H:%M:%S</string>
   <string id="30903">(Not found)</string>
-  <string id="30904">Addon settings</string>
-  <string id="30905">[COLOR green]Select messege &amp; Reply[/COLOR]</string>
-  <string id="30906">OK|Call me</string>
-  <string id="30907">Message has been displayed</string>
-  <string id="30908">[Auto Reply]</string>
-  <string id="30909">[needs reply]</string>
 </strings>

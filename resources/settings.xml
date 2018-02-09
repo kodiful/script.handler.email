@@ -14,6 +14,7 @@
     <setting label="30005" type="action" option="close" action="Container.Update(plugin://$ID/?action=refresh,replace)"/>
   </category>
   <category label="30100">
+    <setting label="30101" id="interval" type="labelenum" values="None|1|5|10|20|30|60" default="None"/>
     <setting label="30102" id="cec" type="bool" default="true"/>
     <setting label="30104" id="debug" type="bool" default="false"/>
   </category>
