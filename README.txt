@@ -1,2 +1,2 @@
-Gmail/iCloudメールを扱います。
+Gmail、iCloudメールほかのIMAP4メールを扱います。
 Windows、MacOS Xで動作します。Linuxやその他のOSでの動作は未検証です。
