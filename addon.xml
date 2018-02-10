@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mail.viewer"
-       name="Mail Viewer"
+<addon id="script.email.handler"
+       name="E-Mail Handler"
        version="1.0"
        provider-name="kodiful">
   <requires>
@@ -16,8 +16,8 @@
     <platform>all</platform>
     <summary lang="en">Mail Viewer</summary>
     <summary lang="ja">メールビューア</summary>
-    <description lang="en">Handle Gmail/iCloud mail</description>
-    <description lang="ja">Gmail/iCloudメールを扱います</description>
+    <description lang="en">Handle Gmail, iCloud Mail and other IMAP4 mail service</description>
+    <description lang="ja">Gmail、iCloudメールほかのIMAP4メールを扱います</description>
     <disclaimer lang="en">Works on Windows &amp; MacOSX</disclaimer>
     <disclaimer lang="ja">WindowsとMacOSXで動作</disclaimer>
   </extension>
