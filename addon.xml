@@ -20,5 +20,6 @@
     <description lang="ja">Gmail、iCloudメールほかのIMAP4メール受信、SMTPによるメール送信に対応します</description>
     <disclaimer lang="en">Works on Windows &amp; MacOSX</disclaimer>
     <disclaimer lang="ja">WindowsとMacOSXで動作</disclaimer>
+    <website>http://kodiful.com/</website>
   </extension>
 </addon>
