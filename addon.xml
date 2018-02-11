@@ -16,9 +16,9 @@
     <platform>all</platform>
     <summary lang="en">E-Mail Client</summary>
     <summary lang="ja">電子メールクライアント</summary>
-    <description lang="en">Support receiveing e-mails from IMAP4 mail service and sending e-mails by SMTP</description>
+    <description lang="en">Support sending/receiving e-mails by SMTP/IMAP4</description>
     <description lang="ja">Gmail、iCloudメールほかのIMAP4メール受信、SMTPによるメール送信に対応します</description>
-    <disclaimer lang="en">Works on Windows &amp; MacOSX</disclaimer>
+    <disclaimer lang="en">Tested on macOS</disclaimer>
     <disclaimer lang="ja">macOSでの動作を確認</disclaimer>
     <website>http://kodiful.com/</website>
   </extension>
