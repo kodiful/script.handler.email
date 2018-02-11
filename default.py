@@ -111,10 +111,9 @@ class Main:
             to = self.addon.getSetting('to')
             cc = self.addon.getSetting('cc')
             # 送信データ
-            values = {'action': 'send', 'subject':subject, 'message': message, 'to':to, 'cc':cc}
+            values = {'action':'send', 'subject':subject, 'message':message, 'to':to, 'cc':cc}
             postdata = urllib.urlencode(values)
             xbmc.executebuiltin('RunPlugin(plugin://%s?%s)' % (self.addon.getAddonInfo('id'), postdata))
-
         elif params['action'] == 'send':
             # メールを送信
             if self.addon.getSetting('bcc') == 'true':
