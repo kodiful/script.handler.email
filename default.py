@@ -104,6 +104,17 @@ class Main:
             # メールの内容を表示
             filename = urllib.unquote_plus(params['filename'])
             if filename: self.open(filename)
+        elif params['action'] == 'sendmessage':
+            # メールを送信
+            subject = self.addon.getSetting('subject')
+            message = self.addon.getSetting('message')
+            to = self.addon.getSetting('to')
+            cc = self.addon.getSetting('cc')
+            # 送信データ
+            values = {'action': 'send', 'subject':subject, 'message': message, 'to':to, 'cc':cc}
+            postdata = urllib.urlencode(values)
+            xbmc.executebuiltin('RunPlugin(plugin://%s?%s)' % (self.addon.getAddonInfo('id'), postdata))
+
         elif params['action'] == 'send':
             # メールを送信
             if self.addon.getSetting('bcc') == 'true':
@@ -162,7 +173,7 @@ class Main:
         # メール送信
         self.service.send(subject, message, to, cc, bcc)
         # 通知
-        notify('Message has been sent to %s' % to)
+        notify('Message has been sent to %s' % ', '.join(to))
 
     def convert(self, item):
         # extract filename & timestamp
@@ -258,9 +269,9 @@ class Main:
                     # コンテクストメニュー
                     menu = []
                     # 新着確認
-                    menu.append((self.addon.getLocalizedString(30201),'Container.Update(%s,replace)' % (sys.argv[0])))
+                    menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s,replace)' % (sys.argv[0])))
                     # アドオン設定
-                    menu.append((self.addon.getLocalizedString(30202),'Addon.OpenSettings(%s)' % (self.addon.getAddonInfo('id'))))
+                    menu.append((self.addon.getLocalizedString(30802),'Addon.OpenSettings(%s)' % (self.addon.getAddonInfo('id'))))
                     # 追加
                     listitem.addContextMenuItems(menu, replaceItems=True)
                     xbmcplugin.addDirectoryItem(int(sys.argv[1]), query, listitem, False)

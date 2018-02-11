@@ -34,7 +34,7 @@ class Mail:
             self.smtp_from = self.smtp_from % user
         self.email_default_encoding = 'utf-8'
 
-    def send(self, subject, body, to, cc=None, bcc=None, replyto=None):
+    def send(self, subject, body, to, cc=[], bcc=[], replyto=None):
         if self.smtp_ssl:
             conn = SMTP_SSL(self.smtp_host, self.smtp_port)
         else:
@@ -49,14 +49,12 @@ class Mail:
         msg['Subject'] = Header(subject, self.email_default_encoding)
         msg['From'] = self.smtp_from
         msg['To'] = ', '.join(to)
-        if cc and len(cc) > 0:
+        if len(cc) > 0:
             msg['CC'] = ', '.join(cc)
-        if bcc and len(bcc) > 0:
-            msg['BCC'] = ', '.join(bcc)
         if replyto:
-            msg['Reply-To'] = replyto;
+            msg['Reply-To'] = replyto
         msg['Date'] = Utils.formatdate(localtime=True)
-        conn.sendmail(self.smtp_from, to, msg.as_string())
+        conn.sendmail(self.smtp_from, to+cc+bcc, msg.as_string())
         conn.close()
 
     def receive(self, criterion='ALL', pref='TEXT'):

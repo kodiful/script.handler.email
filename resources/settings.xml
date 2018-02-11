@@ -28,10 +28,18 @@
     <setting label="30002" id="password2" type="text" option="hidden" default="" visible="eq(-16,1)"/>
     <setting label="30021" type="action" option="close" action="Container.Update(plugin://$ID/?action=refresh,replace)"/>
   </category>
+  <category label="30200">
+    <setting label="30202" id="subject" type="text" default="subject"/>
+    <setting label="30203" id="message" type="text" default="message"/>
+    <setting label="30204" id="to" type="text" default=""/>
+    <setting label="30205" id="cc" type="text" default=""/>
+    <setting label="30206" type="action" option="close" action="RunPlugin(plugin://$ID/?action=sendmessage)"/>
+  </category>
   <category label="30100">
     <setting label="30103" id="listsize" type="labelenum" values="20|50|100|200|300|500|Unlimited" default="100"/>
-    <setting label="30101" id="interval" type="labelenum" values="None|1|5|10|20|30|60" default="None"/>
-    <setting label="30102" id="cec" type="bool" default="true"/>
+    <setting label="30101" id="interval" type="labelenum" values="None|5|10|20|30|60" default="None"/>
+    <setting label="30102" id="cec" type="bool" default="false"/>
+    <setting label="30201" id="bcc" type="bool" default="false"/>
     <setting label="30104" id="debug" type="bool" default="false"/>
   </category>
 </settings>
