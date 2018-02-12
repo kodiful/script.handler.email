@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="script.email.handler"
-       name="E-Mail Handler"
+       name="Mail Handler"
        version="1.0"
        provider-name="kodiful">
   <requires>
