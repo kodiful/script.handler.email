@@ -38,4 +38,6 @@
   <string id="30901">(無題)</string>
   <string id="30902">%Y-%m-%d %H:%M:%S</string>
   <string id="30903">(無し)</string>
+  <string id="30904">%m月%d日</string>
+  <string id="30905">月,火,水,木,金,土,日</string>
 </strings>

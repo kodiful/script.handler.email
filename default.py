@@ -16,7 +16,7 @@ import time, datetime
 
 from bs4 import BeautifulSoup
 
-from resources.lib.common import log, notify
+from resources.lib.common import log, notify, formatted_datetime
 
 from resources.lib.mail import Mail
 from resources.lib.gmail import Gmail
@@ -102,8 +102,7 @@ class Main:
             xbmc.executebuiltin('Container.Update(%s,replace)' % (sys.argv[0]))
         elif params['action'] == 'open':
             # メールの内容を表示
-            filename = urllib.unquote_plus(params['filename'])
-            if filename: self.open(filename)
+            if params['filename']: self.open(params['filename'])
         elif params['action'] == 'sendmessage':
             # メールを送信
             subject = self.addon.getSetting('subject')
@@ -261,10 +260,15 @@ class Main:
                         title = self.addon.getLocalizedString(30901)
                     if filepath in newmails:
                         title = '[COLOR yellow]%s[/COLOR]' % title
-                    plot = '[COLOR green]Date:[/COLOR] %s\n[COLOR green]From:[/COLOR] %s' % (params['Date'],params['From'])
+                    # 日付文字列
+                    d = datetime.datetime.fromtimestamp(os.stat(filepath).st_mtime)
+                    dayfmt = self.addon.getLocalizedString(30904)
+                    daystr = self.addon.getLocalizedString(30905)
+                    fd = formatted_datetime(d, dayfmt, daystr)
+                    # リストアイテム
+                    label = '%s  %s' % (fd, title)
+                    listitem = xbmcgui.ListItem(label, iconImage="DefaultFile.png", thumbnailImage="DefaultFile.png")
                     query = '%s?action=open&filename=%s' % (sys.argv[0],urllib.quote_plus(filename))
-                    listitem = xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage="DefaultFolder.png")
-                    listitem.setInfo(type='video', infoLabels={'title':title, 'plot':plot})
                     # コンテクストメニュー
                     menu = []
                     # 新着確認
