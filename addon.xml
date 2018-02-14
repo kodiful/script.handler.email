@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.email.handler"
+<addon id="script.handler.email"
        name="Mail Handler"
        version="1.0"
        provider-name="kodiful">
@@ -17,7 +17,7 @@
     <summary lang="en">E-Mail Client</summary>
     <summary lang="ja">電子メールクライアント</summary>
     <description lang="en">Support sending/receiving e-mails by SMTP/IMAP4</description>
-    <description lang="ja">Gmail、iCloudメールほかのIMAP4メール受信、SMTPによるメール送信に対応します</description>
+    <description lang="ja">Gmail、iCloudメール等のIMAP4メール受信、SMTPによるメール送信に対応します</description>
     <disclaimer lang="en">Tested on macOS</disclaimer>
     <disclaimer lang="ja">macOSでの動作を確認</disclaimer>
     <website>http://kodiful.com/</website>
