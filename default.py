@@ -91,15 +91,20 @@ class Main:
             params[key] = params[key] and params[key][0]
         # メイン処理
         if params['action'] is None:
-            # メールをチェック
-            self.check()
+            start = self.addon.getSetting('start')
+            if start == "true":
+                # 新着をチェックして表示
+                self.check()
+            else:
+                # 新着をチェックしないで表示
+                self.list(newmails=[])
         elif params['action'] == 'refresh':
             # キャッシュクリア
             files = os.listdir(self.cache_path)
             for filename in files:
                 os.remove(os.path.join(self.cache_path, filename))
             # 再読み込み
-            xbmc.executebuiltin('Container.Update(%s,replace)' % (sys.argv[0]))
+            xbmc.executebuiltin('Container.Update(%s?action=check,replace)' % (sys.argv[0]))
         elif params['action'] == 'open':
             # メールの内容を表示
             if params['filename']: self.open(params['filename'])
