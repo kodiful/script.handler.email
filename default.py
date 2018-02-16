@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
 import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
 
 import os
-import codecs
 import urllib, urlparse
 import re
 import email.utils
@@ -70,7 +67,7 @@ class Main:
         # メールサービスが正常に初期化されたら他の初期化を実行
         if self.service:
             # キャッシュディレクトリのパス
-            profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile').decode('utf-8'))
+            profile_path = xbmc.translatePath(self.addon.getAddonInfo('profile'))
             self.cache_path = os.path.join(profile_path, 'cache', service)
             if not os.path.isdir(self.cache_path):
                 os.makedirs(self.cache_path)
@@ -83,14 +80,14 @@ class Main:
 
     def main(self):
         # パラメータ抽出
-        params = {'action':'','filename':'','subject':'','message':'', 'to':'', 'cc':''}
+        params = {'action':'','filename':'','subject':'','message':'', 'to':[], 'cc':[]}
         args = urlparse.parse_qs(sys.argv[2][1:])
         for key in params.keys():
-            params[key] = args.get(key, None)
+            params[key] = args.get(key, params[key])
         for key in ['action','filename','subject','message']:
             params[key] = params[key] and params[key][0]
         # メイン処理
-        if params['action'] is None:
+        if params['action'] == '':
             start = self.addon.getSetting('start')
             if start == "true":
                 # 新着をチェックして表示
@@ -133,12 +130,12 @@ class Main:
         # 前回表示時の月日を読み込む
         if os.path.isfile(criterion_file):
             f = open(criterion_file, 'r')
-            criterion = f.read().decode('utf-8')
+            criterion = f.read()
             f.close()
         else:
             # 前回表示時の月日が不明の場合は30日前に設定
             d = datetime.datetime.utcnow() - datetime.timedelta(days=30)
-            criterion = d.strftime('SINCE %d-%b-%Y').decode('utf-8')
+            criterion = d.strftime('SINCE %d-%b-%Y')
         # 設定した期間のメールを検索
         newmails, senders = self.receive(criterion)
         if len(newmails) > 0:
@@ -172,7 +169,7 @@ class Main:
             f.write(criterion)
             f.close()
 
-    def send(self, subject, message, to, cc=None, bcc=None):
+    def send(self, subject, message, to, cc=[], bcc=[]):
         # メール送信
         self.service.send(subject, message, to, cc, bcc)
         # 通知
@@ -220,7 +217,7 @@ class Main:
                 # body
                 content += mail['body']
                 # ファイル書き込み
-                f = codecs.open(filepath,'w','utf-8')
+                f = open(filepath,'w')
                 f.write(content)
                 f.close()
                 # タイムスタンプを変更
@@ -241,7 +238,7 @@ class Main:
             if os.path.isfile(filepath) and not filename.startswith('.'):
                 if self.listsize == 0 or count < self.listsize:
                     # ファイル読み込み
-                    f = codecs.open(filepath,'r','utf-8')
+                    f = open(filepath,'r')
                     lines = f.readlines();
                     f.close()
                     # パース
@@ -298,7 +295,7 @@ class Main:
     def open(self, filename):
         # ファイル読み込み
         filepath = os.path.join(self.cache_path, filename)
-        f = codecs.open(filepath,'r','utf-8')
+        f = open(filepath,'r')
         lines = f.readlines();
         f.close()
         # パース
