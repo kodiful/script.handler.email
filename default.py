@@ -95,6 +95,9 @@ class Main:
             else:
                 # 新着をチェックしないで表示
                 self.list(newmails=[])
+        elif params['action'] == 'check':
+            # 新着をチェックして表示
+            self.check()
         elif params['action'] == 'refresh':
             # キャッシュクリア
             files = os.listdir(self.cache_path)
@@ -114,7 +117,7 @@ class Main:
             # 送信データ
             values = {'action':'send', 'subject':subject, 'message':message, 'to':to, 'cc':cc}
             postdata = urllib.urlencode(values)
-            xbmc.executebuiltin('RunPlugin(plugin://%s?%s)' % (self.addon.getAddonInfo('id'), postdata))
+            xbmc.executebuiltin('RunPlugin(%s?%s)' % (sys.argv[0], postdata))
         elif params['action'] == 'send':
             # メールを送信
             if self.addon.getSetting('bcc') == 'true':
@@ -148,7 +151,7 @@ class Main:
             if self.addon.getSetting('cec') == 'true':
                 xbmc.executebuiltin('XBMC.CECActivateSource')
             # 新着があることを通知
-            notify('New mail from %s' % senders[newmails[-1]])
+            notify('New mail from %s' % senders[newmails[0]])
         # アドオン操作で呼び出された場合の処理
         if refresh:
             if os.path.isfile(newmails_file):
@@ -193,6 +196,9 @@ class Main:
             for text in soup.stripped_strings:
                 buf.append(text)
             item['body'] = ' '.join(buf)
+        # 文字コード変換
+        for key in item.keys():
+            if isinstance(item[key], unicode): item[key] = item[key].encode('utf-8')
         return filename, timestamp
 
     def receive(self, criterion):
@@ -218,7 +224,7 @@ class Main:
                 content += mail['body']
                 # ファイル書き込み
                 f = open(filepath,'w')
-                f.write(content.encode('utf-8'))
+                f.write(content)
                 f.close()
                 # タイムスタンプを変更
                 os.utime(filepath, (timestamp, timestamp))
@@ -268,9 +274,6 @@ class Main:
                     daystr = self.addon.getLocalizedString(30905).encode('utf-8')
                     fd = formatted_datetime(d, dayfmt, daystr)
                     # リストアイテム
-                    log(type(fd))
-                    log(type(title))
-                    log(title)
                     label = '%s  %s' % (fd, title)
                     listitem = xbmcgui.ListItem(label, iconImage="DefaultFile.png", thumbnailImage="DefaultFile.png")
                     query = '%s?action=open&filename=%s' % (sys.argv[0],urllib.quote_plus(filename))
