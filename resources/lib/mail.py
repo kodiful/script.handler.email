@@ -56,6 +56,7 @@ class Mail:
         conn.close()
 
     def receive(self, criterion='ALL', pref='TEXT'):
+        if isinstance(criterion, str): criterion = criterion.decode('utf-8')
         emails = []
         if self.imap_ssl:
             conn = IMAP4_SSL(self.imap_host, self.imap_port)

@@ -218,7 +218,7 @@ class Main:
                 content += mail['body']
                 # ファイル書き込み
                 f = open(filepath,'w')
-                f.write(content)
+                f.write(content.encode('utf-8'))
                 f.close()
                 # タイムスタンプを変更
                 os.utime(filepath, (timestamp, timestamp))
@@ -259,15 +259,18 @@ class Main:
                     if params['Subject']:
                         title = params['Subject']
                     else:
-                        title = self.addon.getLocalizedString(30901)
+                        title = self.addon.getLocalizedString(30901).encode('utf-8')
                     if filepath in newmails:
                         title = '[COLOR yellow]%s[/COLOR]' % title
                     # 日付文字列
                     d = datetime.datetime.fromtimestamp(os.stat(filepath).st_mtime)
-                    dayfmt = self.addon.getLocalizedString(30904)
-                    daystr = self.addon.getLocalizedString(30905)
+                    dayfmt = self.addon.getLocalizedString(30904).encode('utf-8')
+                    daystr = self.addon.getLocalizedString(30905).encode('utf-8')
                     fd = formatted_datetime(d, dayfmt, daystr)
                     # リストアイテム
+                    log(type(fd))
+                    log(type(title))
+                    log(title)
                     label = '%s  %s' % (fd, title)
                     listitem = xbmcgui.ListItem(label, iconImage="DefaultFile.png", thumbnailImage="DefaultFile.png")
                     query = '%s?action=open&filename=%s' % (sys.argv[0],urllib.quote_plus(filename))
@@ -288,7 +291,14 @@ class Main:
         if count == 0:
             title = '[COLOR gray]%s[/COLOR]' % self.addon.getLocalizedString(30903)
             listitem = xbmcgui.ListItem(title, iconImage="DefaultFolder.png", thumbnailImage="DefaultFolder.png")
-            listitem.setInfo(type='video', infoLabels={'title':title})
+            # コンテクストメニュー
+            menu = []
+            # 新着確認
+            menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s,replace)' % (sys.argv[0])))
+            # アドオン設定
+            menu.append((self.addon.getLocalizedString(30802),'Addon.OpenSettings(%s)' % (self.addon.getAddonInfo('id'))))
+            # 追加
+            listitem.addContextMenuItems(menu, replaceItems=True)
             xbmcplugin.addDirectoryItem(int(sys.argv[1]), '', listitem, False)
         xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
