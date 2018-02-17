@@ -118,6 +118,14 @@ class Main:
             values = {'action':'send', 'subject':subject, 'message':message, 'to':to, 'cc':cc}
             postdata = urllib.urlencode(values)
             xbmc.executebuiltin('RunPlugin(%s?%s)' % (sys.argv[0], postdata))
+        elif params['action'] == 'prepmessage':
+            self.addon.setSetting('subject', params['subject'])
+            self.addon.setSetting('message', params['message'])
+            self.addon.setSetting('to', ','.join(params['to']))
+            self.addon.setSetting('cc', ','.join(params['cc']))
+            xbmc.executebuiltin('Addon.OpenSettings(%s)' % self.addon.getAddonInfo('id'))
+            xbmc.executebuiltin('SetFocus(101)') # 2nd category
+            xbmc.executebuiltin('SetFocus(203)') # 4th control
         elif params['action'] == 'send':
             # メールを送信
             if self.addon.getSetting('bcc') == 'true':
@@ -279,6 +287,13 @@ class Main:
                     query = '%s?action=open&filename=%s' % (sys.argv[0],urllib.quote_plus(filename))
                     # コンテクストメニュー
                     menu = []
+                    # 返信
+                    to = params.get('From','')
+                    cc = params.get('CC','')
+                    subject = params.get('Subject','')
+                    values = {'action':'prepmessage', 'subject':'Re: '+subject, 'message':'', 'to':to, 'cc':cc}
+                    postdata = urllib.urlencode(values)
+                    menu.append((self.addon.getLocalizedString(30800),'RunPlugin(%s?%s)' % (sys.argv[0],postdata)))
                     # 新着確認
                     menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s,replace)' % (sys.argv[0])))
                     # アドオン設定
