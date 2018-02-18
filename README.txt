@@ -1,2 +1,2 @@
-Gmail、iCloudメール等のIMAP4メール受信、SMTPによるメール送信に対応します
+Gmail、iCloudメール等のIMAP4メール受信、SMTPによるメール送信に対応します。
 macOSでの動作を確認しています。Windows、Linuxやその他のOSでの動作は未検証です。
