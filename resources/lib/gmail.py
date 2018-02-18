@@ -8,9 +8,6 @@ https://support.google.com/mail/answer/7126229/?hl=ja
 アプリパスワードでログイン
 https://support.google.com/mail/answer/185833?hl=ja
 
-2段階認証プロセスを有効にする
-https://support.google.com/accounts/answer/185839?hl=ja
-
 '''
 
 from mail import Mail

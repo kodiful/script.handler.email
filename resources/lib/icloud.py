@@ -18,8 +18,8 @@ class iCloud(Mail):
         self.smtp_host = 'smtp.mail.me.com'
         self.smtp_port = 587
         self.smtp_auth = True
-        self.smtp_ssl  = False
-        self.smtp_tls  = True
+        self.smtp_ssl  = True
+        self.smtp_tls  = False
         self.smtp_from = '%s@icloud.com'
         self.imap_host = 'imap.mail.me.com'
         self.imap_port = 993
