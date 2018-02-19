@@ -295,7 +295,7 @@ class Main:
                     postdata = urllib.urlencode(values)
                     menu.append((self.addon.getLocalizedString(30800),'RunPlugin(%s?%s)' % (sys.argv[0],postdata)))
                     # 新着確認
-                    menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s,replace)' % (sys.argv[0])))
+                    menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s?action=check,replace)' % (sys.argv[0])))
                     # アドオン設定
                     menu.append((self.addon.getLocalizedString(30802),'Addon.OpenSettings(%s)' % (self.addon.getAddonInfo('id'))))
                     # 追加
@@ -312,7 +312,7 @@ class Main:
             # コンテクストメニュー
             menu = []
             # 新着確認
-            menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s,replace)' % (sys.argv[0])))
+            menu.append((self.addon.getLocalizedString(30801),'Container.Update(%s?action=check,replace)' % (sys.argv[0])))
             # アドオン設定
             menu.append((self.addon.getLocalizedString(30802),'Addon.OpenSettings(%s)' % (self.addon.getAddonInfo('id'))))
             # 追加
