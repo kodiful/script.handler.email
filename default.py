@@ -131,7 +131,7 @@ class Main:
             if self.addon.getSetting('bcc') == 'true':
                 bcc = [self.service.smtp_from]
             else:
-                bcc = None
+                bcc = []
             self.send(subject=params['subject'], message=params['message'], to=params['to'], cc=params['cc'], bcc=bcc)
 
     def check(self, refresh=True):
