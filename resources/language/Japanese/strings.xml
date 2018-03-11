@@ -9,6 +9,7 @@
   <string id="30000">メール設定</string>
   <string id="30001">アカウント</string>
   <string id="30002">パスワード</string>
+  <string id="30013">送信者アドレス</string>
   <string id="30003">SMTP ホスト</string>
   <string id="30004">SMTP ポート</string>
   <string id="30005">SMTP 認証</string>

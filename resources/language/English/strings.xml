@@ -9,6 +9,7 @@
   <string id="30000">Mail Settings</string>
   <string id="30001">Account</string>
   <string id="30002">Password</string>
+  <string id="30013">Sender Address</string>
   <string id="30003">SMTP Host</string>
   <string id="30004">SMTP Port</string>
   <string id="30005">SMTP Authentication</string>

@@ -18,6 +18,7 @@ from resources.lib.common import log, notify, formatted_datetime
 from resources.lib.mail import Mail
 from resources.lib.gmail import Gmail
 from resources.lib.icloud import iCloud
+from resources.lib.docomo import Docomo
 
 class Main:
 
@@ -64,6 +65,12 @@ class Main:
             password = self.addon.getSetting('password2')
             if user and password:
                 self.service = iCloud(user, password)
+        elif service == 'docomo':
+            user = self.addon.getSetting('user3')
+            password = self.addon.getSetting('password3')
+            smtp_from = self.addon.getSetting('address3')
+            if user and password and smtp_from:
+                self.service = Docomo(user, password, smtp_from)
         # メールサービスが正常に初期化されたら他の初期化を実行
         if self.service:
             # キャッシュディレクトリのパス

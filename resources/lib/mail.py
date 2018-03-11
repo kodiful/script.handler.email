@@ -121,11 +121,12 @@ class Mail:
     def convert_header(self, msg, key):
         try:
             buf = []
-            value = msg.get(key).replace('\r\n','').replace('==?=','==?= ')
-            if value:
-                for segment in decode_header(value):
-                    text = segment[0]
-                    encoding = segment[1]
+            value = msg.get(key)
+            segments = value.replace('?=','?=\r\n').split('\r\n')
+            for s1 in segments:
+                for s2 in decode_header(s1):
+                    text = s2[0]
+                    encoding = s2[1]
                     if not encoding is None:
                         text = text.decode(encoding,'replace')
                     buf.append(text)
