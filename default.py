@@ -165,7 +165,10 @@ class Main:
             # Kodiをアクティベート
             if self.addon.getSetting('cec') == 'true':
                 xbmc.executebuiltin('CECActivateSource')
-                xbmc.executebuiltin('RunAddon(%s)' % self.addon.getAddonInfo('id'))
+                if xbmc.getInfoLabel('Container.FolderPath'):
+                    xbmc.executebuiltin('Container.Update(plugin://%s)' % addon.getAddonInfo('id'))
+                else:
+                    xbmc.executebuiltin('RunAddon(%s)' % addon.getAddonInfo('id'))
             # 新着があることを通知
             notify('New mail from %s' % senders[newmails[0]])
         # アドオン操作で呼び出された場合の処理
