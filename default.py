@@ -309,10 +309,13 @@ class Main:
                     # 追加
                     listitem.addContextMenuItems(menu, replaceItems=True)
                     xbmcplugin.addDirectoryItem(int(sys.argv[1]), query, listitem, False)
-                    # カウントアップ
-                    count += 1
+                elif count < 1000:
+                    # 新着判定するために残しておく
+                    pass
                 else:
                     os.remove(filepath)
+                # カウントアップ
+                count += 1
         # 表示対象がない場合
         if count == 0:
             title = '[COLOR gray]%s[/COLOR]' % self.addon.getLocalizedString(30903)
