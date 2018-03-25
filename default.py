@@ -164,7 +164,8 @@ class Main:
             xbmc.sleep(1000)
             # Kodiをアクティベート
             if self.addon.getSetting('cec') == 'true':
-                xbmc.executebuiltin('XBMC.CECActivateSource')
+                xbmc.executebuiltin('CECActivateSource')
+                xbmc.executebuiltin('RunAddon(%s)' % self.addon.getAddonInfo('id'))
             # 新着があることを通知
             notify('New mail from %s' % senders[newmails[0]])
         # アドオン操作で呼び出された場合の処理

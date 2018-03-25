@@ -31,9 +31,9 @@
   <string id="30206">[COLOR green]送信[/COLOR]</string>
   <string id="30100">その他</string>
   <string id="30101">新着確認のインターバル(分)</string>
-  <string id="30102">新着時の画面切り替え</string>
+  <string id="30102">新着時に画面を切り替える</string>
   <string id="30103">表示するメール数</string>
-  <string id="30104">起動時に新着を確認</string>
+  <string id="30104">起動時に新着を確認する</string>
   <string id="30105">デバッグ</string>
   <string id="30800">返信</string>
   <string id="30801">新着メールを確認</string>
