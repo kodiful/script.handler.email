@@ -35,6 +35,7 @@ class Monitor(xbmc.Monitor):
 
 
 if __name__ == "__main__":
+    notify('Starting service', time=3000)
     monitor = Monitor()
     while not monitor.abortRequested():
         if monitor.waitForAbort(60):
