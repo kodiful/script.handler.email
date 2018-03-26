@@ -166,9 +166,9 @@ class Main:
             if self.addon.getSetting('cec') == 'true':
                 xbmc.executebuiltin('CECActivateSource')
                 if xbmc.getInfoLabel('Container.FolderPath'):
-                    xbmc.executebuiltin('Container.Update(plugin://%s)' % addon.getAddonInfo('id'))
+                    xbmc.executebuiltin('Container.Update(plugin://%s)' % self.addon.getAddonInfo('id'))
                 else:
-                    xbmc.executebuiltin('RunAddon(%s)' % addon.getAddonInfo('id'))
+                    xbmc.executebuiltin('RunAddon(%s)' % self.addon.getAddonInfo('id'))
             # 新着があることを通知
             notify('New mail from %s' % senders[newmails[0]])
         # アドオン操作で呼び出された場合の処理
