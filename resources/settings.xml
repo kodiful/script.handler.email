@@ -31,7 +31,7 @@
     <setting label="30002" id="password3" type="text" option="hidden" default="" visible="eq(-18,2)"/>
     <setting label="30013" id="address3" type="text" default="" visible="eq(-19,2)"/>
     <!--action-->
-    <setting label="30021" type="action" option="close" action="Container.Update(plugin://$ID/?action=refresh,replace)"/>
+    <setting label="30021" type="action" option="close" action="RunPlugin(plugin://$ID/?action=refresh)"/>
   </category>
   <category label="30200">
     <setting label="30204" id="to" type="text" default=""/>

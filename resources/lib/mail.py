@@ -12,6 +12,8 @@ from email import Utils
 from imaplib import IMAP4,IMAP4_SSL
 from smtplib import SMTP,SMTP_SSL
 
+from resources.lib.common import log, notify, formatted_datetime
+
 class Mail:
 
     def __init__(self, user, password, config=None):
@@ -70,8 +72,11 @@ class Mail:
         conn.select('inbox')
         typ, msgs = conn.search(None, criterion)
         for id in msgs[0].split():
-            typ, data = conn.fetch(id, '(RFC822)')
-            msg = email.message_from_string(data[0][1])
+            #typ, data = conn.fetch(id, '(RFC822)')
+            #msg = email.message_from_string(data[0][1])
+            typ, head = conn.fetch(id, '(BODY.PEEK[HEADER])')
+            typ, body = conn.fetch(id, '(BODY.PEEK[TEXT])')
+            msg = email.message_from_string(head[0][1] + '\r\n' + body[0][1])
             # parse message body
             if msg.is_multipart():
                 text = None
