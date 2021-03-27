@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.handler.email"
-       name="Mail Handler"
-       version="1.0"
-       provider-name="kodiful">
+<addon id="script.handler.email" name="Mail Handler" version="2.0" provider-name="kodiful">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.beautifulsoup4" version="4.3.1"/>
-    <import addon="script.module.chardet" version="2.2.1"/>
+    <import addon="xbmc.python" version="3.0.0" />
+    <import addon="script.module.beautifulsoup4" version="4.3.1" />
+    <import addon="script.module.chardet" version="2.2.1" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>executable</provides>
   </extension>
-  <extension point="xbmc.service" library="service.py"/>
+  <extension point="xbmc.service" library="service.py" />
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">E-Mail Client</summary>
-    <summary lang="ja">電子メールクライアント</summary>
-    <description lang="en">Support sending/receiving e-mails by SMTP/IMAP4</description>
-    <description lang="ja">Gmail、iCloudメール等のIMAP4メール受信、SMTPによるメール送信に対応します</description>
-    <disclaimer lang="en">Tested on macOS</disclaimer>
-    <disclaimer lang="ja">macOSでの動作を確認</disclaimer>
+    <summary lang="en_GB">E-Mail Client</summary>
+    <summary lang="ja_JP">電子メールクライアント</summary>
+    <description lang="en_GB">Support sending/receiving e-mails by SMTP/IMAP4</description>
+    <description lang="ja_JP">Gmail、iCloudメール等のIMAP4メール受信、SMTPによるメール送信に対応します</description>
+    <disclaimer lang="en_GB">Tested on macOS</disclaimer>
+    <disclaimer lang="ja_JP">macOSでの動作を確認</disclaimer>
     <website>http://kodiful.com/</website>
   </extension>
 </addon>

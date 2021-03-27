@@ -1,0 +1,161 @@
+# Kodi Media Center language file
+# Addon Name: Mail Handler
+# Addon id: script.handler.email
+# Addon Provider: kodiful
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: https://forum.kodi.tv/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kodi Translation Team\n"
+"Language-Team: Team-Kodi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Mail Settings"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Account"
+msgstr ""
+
+msgctxt "#30002"
+msgid "Password"
+msgstr ""
+
+msgctxt "#30003"
+msgid "SMTP Host"
+msgstr ""
+
+msgctxt "#30004"
+msgid "SMTP Port"
+msgstr ""
+
+msgctxt "#30005"
+msgid "SMTP Authentication"
+msgstr ""
+
+msgctxt "#30006"
+msgid "SMTP SSL"
+msgstr ""
+
+msgctxt "#30007"
+msgid "SMTP TLS"
+msgstr ""
+
+msgctxt "#30008"
+msgid "SMTP Sender"
+msgstr ""
+
+msgctxt "#30009"
+msgid "IMAP4 Host"
+msgstr ""
+
+msgctxt "#30010"
+msgid "IMAP4 Port"
+msgstr ""
+
+msgctxt "#30011"
+msgid "IMAP4 SSL"
+msgstr ""
+
+msgctxt "#30012"
+msgid "IMAP4 TLS"
+msgstr ""
+
+msgctxt "#30020"
+msgid "Mail Service"
+msgstr ""
+
+msgctxt "#30021"
+msgid "[COLOR green]Reload[/COLOR]"
+msgstr ""
+
+msgctxt "#30100"
+msgid "Others"
+msgstr ""
+
+msgctxt "#30101"
+msgid "Check Interval（min）"
+msgstr ""
+
+msgctxt "#30102"
+msgid "Activation on Arrival"
+msgstr ""
+
+msgctxt "#30103"
+msgid "List Length"
+msgstr ""
+
+msgctxt "#30104"
+msgid "Check new mail on startup"
+msgstr ""
+
+msgctxt "#30105"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#30200"
+msgid "Send Mail"
+msgstr ""
+
+msgctxt "#30201"
+msgid "Include Yourself to BCC:"
+msgstr ""
+
+msgctxt "#30202"
+msgid "Subject"
+msgstr ""
+
+msgctxt "#30203"
+msgid "Message"
+msgstr ""
+
+msgctxt "#30204"
+msgid "To:"
+msgstr ""
+
+msgctxt "#30205"
+msgid "CC:"
+msgstr ""
+
+msgctxt "#30206"
+msgid "[COLOR green]送信[/COLOR]"
+msgstr ""
+
+msgctxt "#30800"
+msgid "Reply"
+msgstr ""
+
+msgctxt "#30801"
+msgid "Check new mail"
+msgstr ""
+
+msgctxt "#30802"
+msgid "Addon settings"
+msgstr ""
+
+msgctxt "#30901"
+msgid "(Untitled)"
+msgstr ""
+
+msgctxt "#30902"
+msgid "%d %b %Y %H:%M:%S"
+msgstr ""
+
+msgctxt "#30903"
+msgid "(Not found)"
+msgstr ""
+
+msgctxt "#30904"
+msgid "%Y-%m-%d"
+msgstr ""
+
+msgctxt "#30905"
+msgid "Mon,Tue,Wed,Thu,Fri,Sat,Sun"
+msgstr ""

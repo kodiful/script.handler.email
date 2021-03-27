@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
-import xbmc, xbmcaddon
+import xbmc
 
 from default import Main
-from resources.lib.common import log, notify
+from resources.lib.common import Common
+
 
 class Monitor(xbmc.Monitor):
 
     def __init__(self, *args, **kwargs):
-        self.addon = xbmcaddon.Addon()
         self.timer = 1
-        xbmc.Monitor.__init__(self)
+        super().__init__()
 
     def check_timer(self):
-        interval = self.addon.getSetting('interval')
+        interval = Common.GET('interval')
         status = False
         if interval == 'None':
             self.timer = 0
@@ -25,13 +25,13 @@ class Monitor(xbmc.Monitor):
         return status
 
     def onSettingsChanged(self):
-        log('settings changed')
+        Common.log('settings changed')
 
     def onScreensaverActivated(self):
-        log('screensaver activated')
+        Common.log('screensaver activated')
 
     def onScreensaverDeactivated(self):
-        log('screensaver deactivated')
+        Common.log('screensaver deactivated')
 
 
 if __name__ == "__main__":
@@ -44,4 +44,4 @@ if __name__ == "__main__":
             if main.service:
                 main.check(refresh=False)
             else:
-                xbmcaddon.Addon().openSettings()
+                Common.ADDON.openSettings()
